@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <script>
+            async function calc() {
+                let x = document.getElementById("x").value;
+                let y = document.getElementById("y").value;
+                let url = '/harry03/calc?x=' + x + '&y=' + y;
+                try {
+                    let response = await fetch(url);
+                    let result = await response.text();
+                    document.getElementById("r").innerHTML = result;
+                } catch (e) {
+                    document.getElementById("r").innerHTML = e;
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <h1>Big Harry Company V2</h1>
+        <hr />
+        <input id="x" />
+        +
+        <input id="y" />
+        <input type="button" onclick="calc()" value="=" />
+        <span id="r"></span>
+    </body>
+</html>
