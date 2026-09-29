@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Register Form</h1>
+    <hr />
+    <form id="regForm">
+        Account: <input id="account" required /><span id="msg"></span><br />
+        Password: <input id="passwd" type="password" required /><br />
+        Name: <input id="name" /><br />
+        <input type="submit" value="Register"><br />
+        <span id="result"></span>
+    </form>
+
+    <script>
+        let account = document.getElementById("account");
+        let passwd = document.getElementById("passwd");
+        let msg = document.getElementById("msg");
+        let result = document.getElementById("result");
+        let regForm = document.getElementById("regForm");
+
+        account.addEventListener('blur', async () => {
+            let url = "/members/exists?account=" + account.value;
+            let response = await fetch(url);
+            if (response.ok) {
+                const { isExists } = await response.json();
+                console.log(isExists);
+                if (isExists) {
+                    msg.textContent = "  Account EXISTS!"
+                    return;
+                }
+            } else {
+                console.log(response);
+            }
+            msg.textContent = "";
+        });
+
+        regForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            let data = {
+                account: account.value,
+                passwd: passwd.value
+            };
+
+            let url = "/members/register";
+            let res = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify(data)
+            })
+            let json = await res.json();
+            console.log(json);
+
+            if (json.success) {
+                result.textContent = "Register success";
+                location.href = "login.html";
+            } else {
+                result.textContent = "Register failure";
+            }
+        });
+
+    </script>
+</body>
+</html>

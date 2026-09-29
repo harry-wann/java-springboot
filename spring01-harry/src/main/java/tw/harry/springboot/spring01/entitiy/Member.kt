@@ -17,8 +17,10 @@ class Member(
 
     var account: String? = null,
 
-    @Column(name = "passwd")
+    @Column(name = "passwd", nullable = false)
     var password: String? = null,
+
+    @Column(nullable = false)
     var name: String? = null,
 
     @Lob

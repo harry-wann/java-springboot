@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#loginForm').on('submit', function (e) {
+                e.preventDefault();
+                let account = $('#account').val();
+                let passwd = $('#passwd').val();
+                let result = $('#result')
+                $.ajax({
+                    url: '/members/loginV2',
+                    type: 'POST',
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                        account: account,
+                        passwd: passwd
+                    }),
+                    success: function (response) {
+                        console.log(response);
+                        if (response.success) {
+                            result.text("Login Success");
+                            location.href = "index.html";
+                        } else {
+                            result.text("Account or password is not correct.");
+                        }
+                    },
+                    error: function (xhttp, status, error) {
+                        console.log(status);
+                        console.log(error);
+                    }
+                })
+            })
+        })
+    </script>
+</head>
+<body>
+    <h1>Login Form</h1>
+    <hr />
+    <form id="loginForm">
+        Account: <input id="account" required /><br />
+        Password: <input id="passwd" type="password" required /><br />
+        <input type="submit" value="Login"><br />
+        <span id="result"></span>
+    </form>
+</body>
+</html>
