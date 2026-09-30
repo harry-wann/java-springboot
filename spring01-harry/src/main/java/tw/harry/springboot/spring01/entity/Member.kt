@@ -1,4 +1,4 @@
-package tw.harry.springboot.spring01.entitiy
+package tw.harry.springboot.spring01.entity
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity

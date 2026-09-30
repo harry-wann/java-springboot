@@ -3,6 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 90%;
+            margin: 20px;
+        }
+        th td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: bisque;
+        }
+    </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
         $(document).ready(function () {
@@ -33,6 +48,56 @@
                     dataType: 'json'
                 }).always(location.href = "/login.html");
             })
+
+            // ----------------
+
+            let nowPage = 0
+            let pageSize = 10
+
+            let totalPage = 0
+            let isLast = 0
+
+            function loadGifts(page) {
+                console.log(`/gifts?page=${page}&pageSize=${pageSize}`);
+                $.ajax({
+                    url: `/gifts?page=${page}&pageSize=${pageSize}`,
+                    method: 'GET',
+                    dataType: 'json'
+                }).done(function (result) {
+                    console.log("Result:", result);
+                    nowPage = result.page;
+                    totalPage = result.totalPages;
+                    isLast = result.isLast;
+
+                    $('#page').text(`${nowPage+1} / ${totalPage+1}`);
+
+                    let tbody = $('#giftTable tbody');
+                    tbody.empty();
+                    result.data.forEach((gift) => {
+                        let content = `<tr>
+                            <td>${gift.id}</td>
+                            <td>${gift.name}</td>
+                            <td>${gift.addr}</td>
+                            <td>${gift.tel}</td>
+                        </tr>`;
+                        tbody.append(content);
+                    })
+                });
+            }
+
+            $('#prev').click(() => {
+                if (nowPage > 0) {
+                    loadGifts(nowPage-1)
+                }
+            });
+            $('#next').click(() => {
+                if (!isLast) {
+                    loadGifts(nowPage+1)
+                }
+            });
+
+            loadGifts(nowPage)
+
         });
 
     </script>
@@ -48,7 +113,7 @@
     | <span id="page"></span> |
     <button id="next">Next</button>
     <hr />
-    <table id="gift">
+    <table id="giftTable">
         <thead>
             <th>ID</th>
             <th>Name</th>

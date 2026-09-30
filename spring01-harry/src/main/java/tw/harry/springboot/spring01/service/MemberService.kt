@@ -3,9 +3,8 @@ package tw.harry.springboot.spring01.service
 import org.mindrot.jbcrypt.BCrypt
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Example
-import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
-import tw.harry.springboot.spring01.entitiy.Member
+import tw.harry.springboot.spring01.entity.Member
 import tw.harry.springboot.spring01.repository.MemberRepository
 import kotlin.jvm.optionals.getOrNull
 
