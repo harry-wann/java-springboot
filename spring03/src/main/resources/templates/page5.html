@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: 2px auto;
+        }
+        td {
+            border: 1px solid #444;
+            padding: 1px 2px;
+            text-align: center;
+        }
+        .odd {
+            background-color: pink;
+        }
+        .even {
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <h1>Page5</h1>
+    <hr />
+    <table>
+        <tbody>
+            <tr th:each="area, status : ${areas}" th:classappend="${(status.odd) ? 'odd' : 'even'}">
+                <td th:text="${status.index}">顯示Index</td>
+                <td th:text="${status.count}">顯示Count</td>
+                <td th:text="${area}">顯示資料</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .status {
+            color: #fff;
+            display: inline-block;
+            border-radius: 4px;
+            padding: 2px 4px;
+        }
+
+        .s1 {
+            background-color: pink;
+        }
+        .s2 {
+            background-color: red;
+        }
+        .s3 {
+            background-color: gray;
+        }
+        .s4 {
+            background-color: gold;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Page2</h1>
+    <hr />
+    <div th:switch="${status}">
+        <div th:case="1" class="status s1">狀態1</div>
+        <div th:case="2" class="status s2">狀態2</div>
+        <div th:case="3" class="status s3">狀態3</div>
+        <div th:case="4" class="status s4">狀態4</div>
+    </div>
+</body>
+</html>

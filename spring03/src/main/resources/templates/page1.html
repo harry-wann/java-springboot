@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <h1>Page1</h1>
+  <hr />
+  <h2>公司名稱</h2>
+  <h2 th:text="${companyName}"></h2>
+<!--  <div th:text="Welcome, ${userName}">Welcome, User</div>-->
+  <div th:text="'Welcome1, ' + ${userName}">Welcome, User</div>
+  <div th:text="${ 'Welcome2, ' + userName}">Welcome, User</div>
+  <div th:text="${now}">現在 Server 時間</div>
+  <hr/>
+  <div th:text="${user.id}">ID</div>
+  <div th:text="${user.name}">Name</div>
+  <div th:text="${user.gender ? 'Male' : 'Female'}">Gender</div>
+  <div th:text="${user.age >= 18 ? '已成年' : '未成年'}">Age</div>
+  <div th:text="${user.age}">Age</div>
+</body>
+</html>
