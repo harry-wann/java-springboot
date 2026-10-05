@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+        <h1>Home Page</h1>
+        <hr />
+        <h2>Hello, <span th:text="${member.name}"></span></h2>
+        <div><img th:src="${icon}" /></div>
+        <div>Logout</div>
+        <hr />
+        <div>
+            <span>Prev</span>
+            <span th:text="${gifts.number + 1} + '/' + ${gifts.totalPages + 1}">Page / Total</span>
+            <span>Next</span>
+        </div>
+        <hr />
+        <table>
+            <thead>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Tel</th>
+                <th>Address</th>
+            </thead>
+            <tbody>
+                <tr th:each="gift : ${gifts.content}">
+                    <td th:text="${gift.id}"></td>
+                    <td th:text="${gift.name}"></td>
+                    <td th:text="${gift.tel}"></td>
+                    <td th:text="${gift.addr}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>
