@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form id="loginForm">
+        Account: <input id="account" /><br />
+        Password: <input type="password" id="passwd" /><br />
+        <input type="submit" value="Login" />
+    </form>
+    <script>
+        document.getElementById("loginForm")
+            .addEventListener("submit", async function(e) {
+                e.preventDefault();
+                let account = document.getElementById("account").value.trim();
+                let passwd = document.getElementById("passwd").value.trim();
+                const response = await fetch("api/login", {
+                    method: "post",
+                    headers: {
+                        'Content-Type': 'application/json' // 告訴伺服器傳送的是 JSON 格式
+                    },
+                    body: JSON.stringify({
+                        "account": account,
+                        "passwd": passwd
+                    })
+                });
+                let result = await response.json();
+                console.log(result)
+                if (result.success) {
+                    console.log(result.token);
+                    localStorage.setItem("token", result.token)
+                    console.log("Login Success");
+                    window.location.href = "main.html";
+                } else {
+                    console.log("Login Failure");
+                }
+            })
+    </script>
+</body>
+</html>
