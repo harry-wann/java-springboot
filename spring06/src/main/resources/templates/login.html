@@ -7,6 +7,8 @@
 <body>
     <h1>Login Page</h1>
     <hr />
+    <div style="color: red;" th:if="${error}" th:text="${error}"></div>
+    <div style="color: green;" th:if="${logout}" th:text="${logout}"></div>
     <form th:action="@{/doLogin}" method="post">
         <label>Account</label>
         <input name="account" /><br />
