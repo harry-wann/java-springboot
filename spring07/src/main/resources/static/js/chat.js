@@ -26,22 +26,38 @@ window.onload = function(){
     function connect(url){
         console.log("Connecting...");
 
-        webSocket = new SocketJS(url);
-        let client = Stomp.over(webSocket);
-        client.connect({}, function(frame) {
-            console.log("Connected!");
-            start.style.display = "none";
-            chatDiv.style.display = "block";
+        try {
+            webSocket = new SockJS(url);
+            client = Stomp.over(webSocket);
+            // {} => headers
+            client.connect({}, function (frame) {
+                start.style.display = "none";
+                chatDiv.style.display = "block";
 
-            client.subscribe("/topic/public", function(msg) {
-                console.log(msg);
-                let body = JSON.parse(msg);
-                receiveMessage(body)
-            });
-        });
+                // 訂閱 => frame
+                client.subscribe("/topic/public", function (message) {
+                    console.log(message);
+                    let body = JSON.parse(message.body);
+                    receiveMessage(body);
+                });
+            }, connectFailure);
+        } catch (e) {
+            connectFailure(e)
+        }
+    }
+
+    function connectFailure(error) {
+        start.style.display = "block";
+        chatDiv.style.display = "none";
+        alert("連線失敗")
     }
 
     function receiveMessage(msg) {
-        chatDiv.innerHTML = `${msg.content}`
+        chatDiv.innerHTML = `${msg.content}`;
+        //chatDiv.innerHTML = `${msg.content}`;
+
+        let rowDiv = document.createElement("div");
+        rowDiv.textContent = mesg.content;
+        log.appendChild(rowDiv);
     }
 }

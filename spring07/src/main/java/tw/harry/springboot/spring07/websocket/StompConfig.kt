@@ -13,7 +13,7 @@ import org.springframework.web.socket.server.support.DefaultHandshakeHandler
 import java.security.Principal
 
 @Configuration
-@EnableWebSocketMessageBroker
+@EnableWebSocketMessageBroker // STOMP
 class StompConfig : WebSocketMessageBrokerConfigurer {
 
     override fun configureMessageBroker(registry: MessageBrokerRegistry) {
@@ -46,6 +46,7 @@ class StompConfig : WebSocketMessageBrokerConfigurer {
 //
 //                    return false
 
+                    println("beforeHandshake")
                     return true
                 }
 
@@ -55,7 +56,7 @@ class StompConfig : WebSocketMessageBrokerConfigurer {
                     wsHandler: WebSocketHandler,
                     exception: Exception?
                 ) {
-
+                    println("afterHandshake")
                 }
             })
             .setHandshakeHandler(object : DefaultHandshakeHandler() {

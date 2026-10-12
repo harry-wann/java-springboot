@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Insert title here</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+        <script type="text/javascript" src="js/chat2.js"></script>
+        <style>
+            .rooms {
+                display: flex;
+                gap: 20px
+            }
+            .room {
+                flex: 1;
+                min-width: 0
+            }
+            .log {
+                border: 1px solid black;
+                height: 400px;
+                overflow: auto;
+                margin-top: 10px
+            }
+        </style>
+
+    </head>
+    <body>
+        <button id="start">Start</button>
+        <div id="chatDiv">
+            <div class="rooms">
+                <div class="room">
+                    <h2>Java Room</h2>
+                    <p>/topic/rooms/java</p>
+                    <div>
+                        <input id="msg" />
+                        <button id="send">Send</button>
+                    </div>
+                    <div id="log" class="log"></div>
+                </div>
+
+                <div class="room">
+                    <h2>Spring Room</h2>
+                    <p>/topic/rooms/spring</p>
+                    <div>
+                        <input id="springMesg" />
+                        <button id="springSend">Send</button>
+                    </div>
+                    <div id="springLog" class="log"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
