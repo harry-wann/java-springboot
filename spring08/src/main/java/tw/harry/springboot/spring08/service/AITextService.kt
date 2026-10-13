@@ -1,14 +1,17 @@
 package tw.harry.springboot.spring08.service
 
 import org.springframework.ai.chat.client.ChatClient
+import org.springframework.ai.openai.OpenAiChatModel
 import org.springframework.stereotype.Service
 
 @Service
 class AITextService(
-    builder: ChatClient.Builder,
+    chatModel: OpenAiChatModel
 ) {
 
-    private val chatClient: ChatClient = builder.build()
+    private val chatClient = ChatClient
+        .builder(chatModel)
+        .build()
 
     fun describeProduct(text: String): String {
         return generate("""
@@ -41,7 +44,7 @@ class AITextService(
 
             return result
         } catch(e: RuntimeException) {
-            throw
+            return "ERROR"
         }
     }
 }
