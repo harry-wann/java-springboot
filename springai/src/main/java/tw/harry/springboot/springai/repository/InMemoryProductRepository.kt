@@ -30,6 +30,8 @@ class InMemoryProductRepository : ProductRepository {
             filter.keyword.trim()
         }
 
+        println("WTF: $keyword")
+
         val matches = products
             .filter { it.productName?.contains(keyword, true) == true }
             .filter { (filter.categoryId == null) || (filter.categoryId == it.categoryId) }
@@ -37,6 +39,8 @@ class InMemoryProductRepository : ProductRepository {
             .filter { filter.isStockOnly == false || it.unitsInStock!! > 0 }
 
         val page = matches.take(filter.limit)
+
+        println("WTF: ${matches.size} ${page.size}")
 
         return ProductLookup(
             products = page,
