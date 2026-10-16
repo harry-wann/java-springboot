@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+  <h1>Big Harry Company</h1>
+  <hr />
+  <form id="uploadForm">
+    <input id="icon" type="file" accept="image/jpeg, image/png" required>
+    <input type="submit" value="send">
+  </form>
+  <img id="preview" hidden />
+  <p id="status"></p>
+  <p id="result"></p>
+  <script>
+    let form = document.getElementById("uploadForm")
+    let uploadFile = document.getElementById("icon")
+    let preview = document.getElementById("preview")
+    let status = document.getElementById("status")
+    let result = document.getElementById("result")
+
+    uploadFile.addEventListener("change", async () => {
+        preview.hidden = true
+        status.textContent = ""
+        result.textContent = ""
+
+        let file = uploadFile.files[0];
+        if (file) {
+          preview.src = await readFile(file)
+          preview.hidden = false;
+        }
+    })
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      status.textContent = "AI 判讀中......";
+      result.textContent = "";
+
+      let file = uploadFile.files[0]
+      let dataUrl = await readFile(file)
+      let base64 = dataUrl.split(",", 2)[1]
+
+      let response = await fetch("/ai/ask", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          type: file.type,
+          base64: base64
+        })
+      })
+
+      status.textContent = response.status
+      result.textContent = JSON.stringify(await response.json(), null, 2)
+
+    })
+
+    function readFile(file) {
+      return new Promise((resolve) => {
+        let reader = new FileReader()
+        reader.onload = () => resolve(reader.result)
+        reader.readAsDataURL(file)
+      })
+    }
+  </script>
+</body>
+</html>
